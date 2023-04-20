@@ -16,13 +16,13 @@ public class ShowActivity extends AppCompatActivity {
         if (extras != null) {
 
             String name = extras.getString("name");
-            int number = extras.getInt("shoeSize");
+            String number = extras.getString("shoeSize");
 
             TextView nameView = findViewById(R.id.textViewName);
             nameView.setText(name);
 
             TextView shoeSizeView = findViewById(R.id.textViewShoeSize);
-            shoeSizeView.setText(String.valueOf(shoeSizeView));
+            shoeSizeView.setText(number);
         }
     }
 }

@@ -1,42 +1,127 @@
 
 # Rapport
 
-**Skriv din rapport här!**
+I created the layout for main screen with 2 textViews for user inputs and a button
+to show the result. I changed the size, name and added constraints.
+```
+ <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="257dp"
+        android:layout_height="83dp"
+        android:layout_marginBottom="88dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/editTextShoeSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
-_Du kan ta bort all text som finns sedan tidigare_.
+    <EditText
+        android:id="@+id/editTextShoeSize"
+        android:layout_width="246dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="96dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Shoe size"
+        app:layout_constraintBottom_toTopOf="@+id/showButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
-## Följande grundsyn gäller dugga-svar:
+    <Button
+        android:id="@+id/showButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="136dp"
+        android:text="Show my info!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+```
 
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+I created a second activity called ShowActivity to be able to output inserted data
+and added two textViews for the inserted data be able to show on the screen.
 
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
-    }
-}
+  <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="111dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="216dp"
+        android:text="Name"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UnknownId" />
+
+    <TextView
+        android:id="@+id/textViewShoeSize"
+        android:layout_width="111dp"
+        android:layout_height="87dp"
+        android:text="ShoeSize"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewName"
+        app:layout_constraintVertical_bias="0.368" />
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
+I added Button object in MainActivity.java file and created variables for the data input.
+I added action listener for the button and onClick method to show the showActivity screen 
+when button is pushed. Intent variable is used to start the activity.
+Inputs are converted to Strings to adjust the datatypes.
 
-![](android.png)
+```
+Button showButton = findViewById(R.id.showButton);
+        showButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
 
-Läs gärna:
+                EditText nameEdit = findViewById(R.id.editTextName);
+                String name = nameEdit.getText().toString();
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+                EditText shoeSizeEdit = findViewById(R.id.editTextShoeSize);
+                String shoeSize = shoeSizeEdit.getText().toString();
+
+                Intent intent = new Intent(MainActivity.this, ShowActivity.class);
+                intent.putExtra("name", name); // Optional
+                intent.putExtra("shoeSize", shoeSize ); // Optional
+                startActivity(intent);
+            }
+        });
+```
+
+I used Bundle in ShowActivity.java file to handle the intent. 
+I added TextView for name and for the shoe size to be found by Id. 
+
+```
+Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+
+            String name = extras.getString("name");
+            String number = extras.getString("shoeSize");
+
+            TextView nameView = findViewById(R.id.textViewName);
+            nameView.setText(name);
+
+            TextView shoeSizeView = findViewById(R.id.textViewShoeSize);
+            shoeSizeView.setText(number);
+        }
+```
+
+I added "go back to main" button on the top left corner by adding this line in AndroidManifest.xml file.
+
+```
+ android:parentActivityName=".MainActivity"
+```
+
+These are the pictures of my App.
+
+![](main.png)
+
+![](show.png)

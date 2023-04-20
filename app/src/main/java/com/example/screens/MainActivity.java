@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
                 String name = nameEdit.getText().toString();
 
                 EditText shoeSizeEdit = findViewById(R.id.editTextShoeSize);
-                String shoeSize = nameEdit.getText().toString();
+                String shoeSize = shoeSizeEdit.getText().toString();
 
                 Intent intent = new Intent(MainActivity.this, ShowActivity.class);
                 intent.putExtra("name", name); // Optional
