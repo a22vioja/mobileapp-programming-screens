@@ -122,6 +122,6 @@ I added "go back to main" button on the top left corner by adding this line in A
 
 These are the pictures of my App.
 
-![](main.png)
+![](main1.png)
 
-![](show.png)
+![](show1.png)
